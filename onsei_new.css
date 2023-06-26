@@ -1,0 +1,23 @@
+body {
+	background-image: url("001.png");
+	background-repeat: no-repeat;
+	background-position: center right;
+	background-color: rgba(0, 200, 0, 0.2);
+}
+
+button {
+  width: 8em;
+  height:3em;
+}
+
+h1{
+	text-align:center;
+}
+
+h2{
+	text-align:center;
+}
+
+h3{
+	text-align:center;
+}
