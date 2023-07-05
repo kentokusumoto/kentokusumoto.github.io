@@ -9,15 +9,28 @@
 </head>
 <body>
 
-<h1>4大宗教</h1>
+<h1>4大宗教の学習</h1>
 
-<h2>以下の言葉を話してみましょう！</h2>
-<h3>①キリスト教　②イスラム教　③仏教　④ヒンドゥー教</h3>
+<h3>「start」を押して以下のキーワードをコンピュータに向けて話してみよう！</h3>
+<h2>・釈迦　・ムハンマド　・イエスキリスト　・カースト制度　・牛肉　・豚肉　・人口　・コーラン　・エルサレム</h2>
 
+<div class="wrap">
 <p>
 <button id="startButton">start</button>
 <button id="stopButton">stop</button>
 </p>
+</div class="wrap">
+
+<style>
+.wrap{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.botan{
+	margin: 5px 0;
+}
+</style>
 
 <p>
 <div id="resultOutput"></div>
@@ -30,6 +43,15 @@ var response = {
     "イスラム教": ["イスラム教についてのウィキペディアのページを表示します", "https://ja.wikipedia.org/wiki/%E3%82%A4%E3%82%B9%E3%83%A9%E3%83%A0%E6%95%99"],
     "仏教": ["仏教についてのウィキペディアのページを表示します", "https://ja.wikipedia.org/wiki/%E4%BB%8F%E6%95%99"],
     "ヒンドゥー教": ["ヒンドゥー教についてのウィキペディアのページを表示します", "https://ja.wikipedia.org/wiki/%E3%83%92%E3%83%B3%E3%83%89%E3%82%A5%E3%83%BC%E6%95%99"],
+		"釈迦":["仏教を作った人物。紀元前5世紀ごろインドに生まれた。釈迦とはネパールの部族の名前"],
+		"ムハンマド":["イスラム教を作った人物です。6世紀アラビア半島に生まれました"],
+		"カースト制度":["カースト制度はヒンドゥー教の厳しい身分制度です"],
+		"イエスキリスト":["キリスト教を作った人物です。「キリスト」とは「救い主」という意味があります"],
+		"牛肉":["ヒンドゥー教では牛は神聖な動物とされているため牛肉を食べることが禁止されています"],
+		"豚肉":["イスラム教では豚は不浄な動物とされているため豚肉を食べることが禁止されています"],
+		"人口":["信者の数はキリスト教２４億人、イスラム教１７億人、ヒンドゥー教１０億人、仏教５億人"],
+		"コーラン":["イスラム教の聖典をコーランと呼びます"],
+		"エルサレム":["イエスがはりつけにされた場所がエルサレムです。キリスト教の聖地となっています"],
 };
 
 const startButton = document.querySelector('#startButton'); // 開始ボタン
@@ -64,31 +86,31 @@ asr.onresult = function(event){
 
     let output_not_final = '';
     if (event.results[event.resultIndex].isFinal) { // 結果が確定（Final）のとき
-	    asr.abort(); // 音声認識を停止
-	    let ret = response[transcript];
+     asr.abort(); // 音声認識を停止
+     let ret = response[transcript];
 
         let answer;
         let webpage;
         
         if(typeof ret == 'undefined'){
-	        answer = "ごめんなさい。わかりません。";
-    	}else{
+         answer = "ごめんなさい。わかりません。";
+     }else{
             answer = ret[0];
             webpage = ret[1];
         }
 
         output += transcript + ' => ' + answer + '<br>';
 
-	    tts.text = answer;
-	    // 再生が終了（end）ときのイベントハンドラ（終了したときに実行される）
-	    tts.onend = function(event){
+     tts.text = answer;
+     // 再生が終了（end）ときのイベントハンドラ（終了したときに実行される）
+     tts.onend = function(event){
             if(typeof webpage != 'undefined'){
-                location.href = webpage; // ページを移動
+                window.open(webpage, "_blank"); // 新しいウィンドウでページを開く
             }   
             asr.start(); // 音声認識を再開 
-	    }
+     }
 
-	    speechSynthesis.speak(tts); // 再生
+     speechSynthesis.speak(tts); // 再生
     } else { // 結果がまだ未確定のとき
         output_not_final = '<span style="color:#ddd;">' + transcript + '</span>';
     }
@@ -105,7 +127,10 @@ stopButton.addEventListener('click', function() {
     asr.abort();
     asr.stop();
 })
+
 </script>
+<h4>「start」を押して宗教の名前をコンピュータに向けて発してみよう！より詳しい情報が得られるよ！</h4>
+<h4>A.キリスト教　B.イスラム教　C.仏教　D.ヒンドゥー教</h4>
 
 </body>
 </html>
